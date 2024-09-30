@@ -17,12 +17,17 @@ sudo systemctl start jenkins
 #install docker
 sudo apt-get update
 sudo apt-get install docker.io -y
+echo "Docker installed successfully"
 sudo usermod -aG docker ubuntu
 sudo usermod -aG docker jenkins
-newgrp docker
-sudo chmod 777 /var/run/docker.sock
+echo "Docker setup completed"
+sudo systemctl restart docker
+echo "Docker restarted successfully"
 sudo systemctl restart jenkins
+echo "Jenkins restarted successfully"
+sudo chmod 666 /var/run/docker.sock
 docker run -d --name sonar -p 9000:9000 sonarqube:lts-community
+echo "sonar successfully running as container"
 
 #install docker compose
 sudo curl -L "https://github.com/docker/compose/releases/download/v2.21.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
@@ -44,7 +49,6 @@ sudo apt-get install unzip -y
 unzip awscliv2.zip
 sudo ./aws/install
 aws --version
-
 
 # Install Node.js 16 and npm
 curl -fsSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | sudo gpg --dearmor -o /usr/share/keyrings/nodesource-archive-keyring.gpg
